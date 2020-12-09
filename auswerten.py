@@ -199,4 +199,4 @@ ax1.legend()
 ax1.set_ylabel('$p$')
 fig.savefig("graph.png")
 
-m.save("map.html")
+m.save("docs/map.html")
