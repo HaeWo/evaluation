@@ -14,14 +14,14 @@ def haversine(coord1, coord2):
     R = 6372800  # Earth radius in meters
     lat1, lon1 = coord1
     lat2, lon2 = coord2
-    
-    phi1, phi2 = math.radians(lat1), math.radians(lat2) 
+
+    phi1, phi2 = math.radians(lat1), math.radians(lat2)
     dphi       = math.radians(lat2 - lat1)
     dlambda    = math.radians(lon2 - lon1)
-    
+
     a = math.sin(dphi/2)**2 + \
         math.cos(phi1)*math.cos(phi2)*math.sin(dlambda/2)**2
-    
+
     return 2*R*math.atan2(math.sqrt(a), math.sqrt(1 - a))
 
 def posdataToPopUp(coord, accuracy, distance):
@@ -94,6 +94,16 @@ routePoints = {
         (51.43498, 6.89098),
         (51.43556, 6.891),
         (51.43576, 6.89123),
+    ],
+    4: [
+        (51.42779, 6.88152),
+        (51.42844, 6.88298),
+        (51.42894, 6.88485),
+        (51.42953, 6.88671),
+        (51.43044, 6.88661),
+        (51.43176, 6.88676),
+        (51.43183, 6.8886),
+        (51.43321, 6.88873),
     ]
 }
 
@@ -115,7 +125,7 @@ m = folium.Map(
     tiles="CartoDB positron"
 )
 
-for route in [1,2,3]:
+for route in [1,2,3,4]:
     folium.PolyLine(routePoints[route], color="#2E282A").add_to(m)
     for point in routePoints[route]:
         folium.CircleMarker(
@@ -147,7 +157,7 @@ for route in [1,2,3]:
                             data[accuracy].append(distance)
                         else:
                             distance = 0
-                        
+
                         folium.CircleMarker(
                             location=latLng,
                             radius=8,
@@ -156,12 +166,12 @@ for route in [1,2,3]:
                             fill_color=colors[accuracy],
                             popup=posdataToPopUp(latLng, accuracy, distance),
                         ).add_to(m)
-                        
+
                 elif isinstance(decJson, list):
                     for v in decJson:
                         count = count + 1
                         latLng = (v["Latitude"], v["Longitude"])
-                        
+
                         if not onlyPlot:
                             posOrig = routePoints[route][count]
                             distance = haversine(posOrig, latLng)
