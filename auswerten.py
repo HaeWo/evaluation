@@ -34,6 +34,7 @@ def posdataToPopUp(coord, accuracy, distance):
     """.format(accuracy, lat, lon, round(distance, 2))
 
 routePoints = {
+    # Bochum Citypoint
     1: [
         (51.48219, 7.21652),
         (51.4822, 7.21686),
@@ -44,6 +45,7 @@ routePoints = {
         (51.4804, 7.21711),
         (51.48019, 7.21651),
     ],
+    # Bochum HBF
     2: [
         (51.47938, 7.22209),
         (51.47923, 7.22229),
@@ -56,6 +58,7 @@ routePoints = {
         (51.47807, 7.22227),
         (51.47837, 7.22193),
     ],
+    # Bochum Querenburg
     3: [
         (51.46154, 7.27469),
         (51.46179, 7.27643),
@@ -64,6 +67,7 @@ routePoints = {
         (51.45937, 7.28211),
         (51.45936, 7.2836),
     ],
+    # Mülheim an der Ruhr
     4: [
         (51.42779, 6.88152),
         (51.42844, 6.88298),
@@ -173,9 +177,10 @@ for accuracy in ["high", "balanced", "gps"]:
 ax1.grid(color='grey', linestyle='-', linewidth=0.25, alpha=0.5)
 plt.xticks((0, 10, 20, 50, 70, 100, 150, 200, 250))
 plt.yticks((0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0))
+plt.xlim(left=0, right=300)
 ax1.set_xlabel('Error distance ($meters$)')
 ax1.legend()
 ax1.set_ylabel('$p$')
-fig.savefig("graph.png")
+fig.savefig("docs/graph.png", bbox_inches='tight')
 
 m.save("docs/map.html")
