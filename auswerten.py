@@ -174,6 +174,12 @@ for accuracy in ["high", "balanced", "gps"]:
     line, = ax1.plot(xDataSorted, p, colors[accuracy], marker=marker.CARETDOWNBASE)
     line.set_label(accuracy)
 
+    xvalues = line.get_xdata()
+    yvalues = line.get_ydata()
+    val50 = np.interp(0.5, yvalues, xvalues)
+    val95 = np.interp(0.95, yvalues, xvalues)
+    print(accuracy, "0.5", val50, "0.95", val95)
+
 ax1.grid(color='grey', linestyle='-', linewidth=0.25, alpha=0.5)
 plt.xticks((0, 10, 20, 50, 70, 100, 150, 200, 250))
 plt.yticks((0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0))
