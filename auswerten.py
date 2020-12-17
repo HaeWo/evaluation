@@ -84,12 +84,14 @@ data = {
     "high": [],
     "balanced": [],
     "gps": [],
+    "gps_high": [],
 }
 
 colors = {
     "high": "#EF3E36", # Red
     "balanced": "#17BEBB", # Blue
     "gps": "#EDB88B", # Beige
+    "gps_high": "#32a852", # Grün
 }
 
 m = folium.Map(
@@ -107,7 +109,7 @@ for route in [1,2,3,4]:
             color="black",
         ).add_to(m)
 
-    for accuracy in ["high", "balanced", "gps"]:
+    for accuracy in data.keys():
         files = glob.glob("route{}/{}/*.json".format(route, accuracy))
         for file in files:
             with open(file, "r") as f:
@@ -164,8 +166,10 @@ for route in [1,2,3,4]:
 
 fig = plt.figure()
 ax1 = fig.add_subplot()
-for accuracy in ["high", "balanced", "gps"]:
+for accuracy in data.keys():
     xData = data[accuracy]
+    if len(xData) == 0:
+        continue
     xDataSorted = np.sort(xData)
 
     # calculate the proportional values of samples
